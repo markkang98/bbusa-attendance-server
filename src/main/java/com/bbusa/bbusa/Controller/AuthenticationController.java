@@ -8,6 +8,7 @@ import com.bbusa.bbusa.Entity.StudentEntity;
 import com.bbusa.bbusa.Repository.AuthenticationRepository;
 import com.bbusa.bbusa.Repository.StudentInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,8 +58,9 @@ public class AuthenticationController {
     }
 
     @GetMapping("/login")
-    @CrossOrigin(origins = "http://attendance.trial.com:3000/")
-    public ResponseEntity verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password){
+    public String verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password){
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://attendance.trial.com:3000");
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
         byte [] salt = authenticationRepository.getSalt(user_id);
         if(authenticationRepository.getHashedPassword(user_id).equals(passwordHasher.checkPassword(password, salt))) {
             try {
@@ -67,20 +69,19 @@ public class AuthenticationController {
                String hashedCookie = passwordHasher.getSecurePassword();
                httpServletResponse.addCookie(new Cookie(COOKIE_KEY,  hashedCookie));
                //TODO: MAKE AN ENETITY TO STORE THE HASHED COOKIE AND SALT
-               System.out.println(hashedCookie);
+                return hashedCookie;
             }catch (NoSuchAlgorithmException ex){
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                return "not working";
             }
-            return ResponseEntity.status(HttpStatus.OK).build();
         }else{
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+            return "not working";
         }
     }
     @GetMapping("/getCurrentUser")
-    @CrossOrigin(origins = "http://attendance.trial.com:3000/")
-    public String getCurrentUser(@CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
+    public String getCurrentUser(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
         //TODO: MAKE LOGIC FOR CHECKING IF COOKIE IS VERIFIED
-        System.out.println(cookie);
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://attendance.trial.com:3000");
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
         return cookie;
 
     }
