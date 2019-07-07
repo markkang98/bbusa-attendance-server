@@ -67,14 +67,17 @@ public class AuthenticationController {
                passwordHasher.hashPassword(user_id + password);
                byte [] cookieSalt = passwordHasher.getSalt();
                String hashedCookie = passwordHasher.getSecurePassword();
-               httpServletResponse.addCookie(new Cookie(COOKIE_KEY,  hashedCookie));
+               Cookie cookie = new Cookie(COOKIE_KEY,  hashedCookie);
+               cookie.setMaxAge(Integer.MAX_VALUE);
+               httpServletResponse.addCookie(cookie);
                //TODO: MAKE AN ENETITY TO STORE THE HASHED COOKIE AND SALT
+                System.out.println(hashedCookie);
                 return hashedCookie;
             }catch (NoSuchAlgorithmException ex){
                 return "not working";
             }
         }else{
-            return "not working";
+            return "wrong password";
         }
     }
     @GetMapping("/getCurrentUser")
@@ -82,6 +85,7 @@ public class AuthenticationController {
         //TODO: MAKE LOGIC FOR CHECKING IF COOKIE IS VERIFIED
         httpServletResponse.addHeader("Access-Control-Allow-Origin", "http://attendance.trial.com:3000");
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+        System.out.println(cookie);
         return cookie;
 
     }
