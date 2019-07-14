@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface StudentInformationRepository extends JpaRepository<StudentEntity, String> {
 
-    @Override
-    @Query(value = "SELECT * FROM trial_database.students x ORDER BY x.belt_order", nativeQuery = true)
-    List<StudentEntity> findAll();
-    @Query(value = "SELECT * FROM trial_database.students x WHERE x.belt_color = :belt_color", nativeQuery = true)
+    @Query(value = "SELECT * FROM students x WHERE x.instructor_id = :user_id ORDER BY x.belt_order", nativeQuery = true)
+    List<StudentEntity> findAllForUser(String user_id);
+
+    @Query(value = "SELECT * FROM students x WHERE x.belt_color = :belt_color", nativeQuery = true)
     List<StudentEntity> findByBelt(@Param("belt_color") String beltColor);
 }

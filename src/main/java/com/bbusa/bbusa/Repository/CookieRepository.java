@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CookieRepository extends JpaRepository<CookieEntity, String> {
 
-    @Query(value = "SELECT * FROM trial_database.cookie x WHERE x.cookie = :cookie", nativeQuery = true)
+    @Query(value = "SELECT * FROM cookie x WHERE x.cookie = :cookie", nativeQuery = true)
     CookieEntity findLoggedInUser(String cookie);
 
 }
