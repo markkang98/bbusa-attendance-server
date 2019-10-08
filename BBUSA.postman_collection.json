@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "b916168d-4d35-4b40-9f5b-a3314d72b3f7",
+		"name": "BBUSA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/registration?userid=tiffanymei&password=password",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"registration"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "tiffanymei"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enter Student Information",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/enterStudentInformation?userid=markkang&beltColor=BROWN&contractType=MONTHLY&firstName=FIRSTNAME&lastName=LASTNAME",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"enterStudentInformation"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "markkang"
+						},
+						{
+							"key": "beltColor",
+							"value": "BROWN"
+						},
+						{
+							"key": "contractType",
+							"value": "MONTHLY"
+						},
+						{
+							"key": "firstName",
+							"value": "FIRSTNAME"
+						},
+						{
+							"key": "lastName",
+							"value": "LASTNAME"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student From Belt Color",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/getStudentByBelt?beltColor=WHITE",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"getStudentByBelt"
+					],
+					"query": [
+						{
+							"key": "beltColor",
+							"value": "WHITE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Attendance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/submitAttendance?first_name=Jim&last_name=Kang",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"submitAttendance"
+					],
+					"query": [
+						{
+							"key": "first_name",
+							"value": "Jim"
+						},
+						{
+							"key": "last_name",
+							"value": "Kang"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/login?userid=markkang&password=markkangpassword",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "markkang"
+						},
+						{
+							"key": "password",
+							"value": "markkangpassword"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/getAllStudents",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"getAllStudents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Current User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/getCurrentUser",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"getCurrentUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log Out",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:443/logOut",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "443",
+					"path": [
+						"logOut"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
