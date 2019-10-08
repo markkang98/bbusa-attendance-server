@@ -19,3 +19,12 @@
 7. Make sure that Intellij is using your jdk
 8. Your project should open up, and on the top right corner, you should see be able to select run as a spring boot project. 
 
+## MYSQL Workbench 
+If you would like to visualize your database, use MYSQL workbench. 
+
+1. Download MYSQL workbench. 
+2. Make a new connection, and add a name for that connection (any name should suffice, as long as you will remember it)
+3. The host is **bbusa-aws-database.cmzqesgmdg2y.us-east-1.rds.amazonaws.com** and the port is **3306** 
+4. The username is **root**
+5. When the connection is working correctly, it will ask you to input the password. **please ask me directly for the password** 
+6. The default database is titled **innodb** and you should be able to see the tables created and the data populated in it. 
