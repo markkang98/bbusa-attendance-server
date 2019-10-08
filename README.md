@@ -15,7 +15,7 @@
 3. Select your cloned repoistory in your local machine
 4. Select Import projects by selecting **maven**, then select next
 5. Select  **Search for projects recursively** and **Import Maven projects automatically**, then select next
-6. Make sure ** com.bbusa:bbusa:0.0.1-SNAPSHOT ** is selected, and select next. 
+6. Make sure **com.bbusa:bbusa:0.0.1-SNAPSHOT** is selected, and select next. 
 7. Make sure that Intellij is using your jdk
 8. Your project should open up, and on the top right corner, you should see be able to select run as a spring boot project. 
 
@@ -28,3 +28,11 @@ If you would like to visualize your database, use MYSQL workbench.
 4. The username is **root**
 5. When the connection is working correctly, it will ask you to input the password. **please ask me directly for the password** 
 6. The default database is titled **innodb** and you should be able to see the tables created and the data populated in it. 
+
+## POSTMAN 
+You can test the API endpoints using Postman, instead of manually testing on a frontend UI. 
+1. Download Postman. `https://www.getpostman.com/downloads/`
+2. Open the application, and select **Import** and you should see that it wants you to drop a file. 
+3. In the repoistory, you should see a json file named `BBUSA.postman_collection.json`. Drop that file into postman. 
+4. You should be able to see the basic endpoints that are used to test the minimum features of the application. 
+5. If there are SSL connection errors, make sure to go to **Preferences** and turn off SSL connection. 
