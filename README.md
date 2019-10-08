@@ -4,6 +4,8 @@
   earlier versions should be fine. 
 2. Download Intellij 
 3. Download Postman to test API endpoints (optional) 
+4. Download MYSQL and have it running locally on your machine. https://dev.mysql.com/doc/mysql-osx-excerpt/5.7/en/osx-installation.html
+5. Download MYSQL workbench for a visual of the database (optional)
 
 ## Import Project
 1. Clone this repository into your local machine. 
