@@ -14,7 +14,7 @@ public class AttendanceEntityTests {
         Date date = new Date(04,26,1998);
 
         attendanceEntity.setAttendance_date(date);
-        Assert.assertEquals(attendanceEntity.getFirst_name(), "Jim");
+        Assert.assertEquals(attendanceEntity.getFirst_name(), "Sally");
         Assert.assertEquals(attendanceEntity.getLast_name(), "Kang");
 
     }
