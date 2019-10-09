@@ -9,7 +9,7 @@ pipeline {
       steps {
       sh 'mvn clean install'
         script {
-          echo 'Build successful'
+          echo 'Build Successful'
         }
       }
     }
@@ -17,7 +17,7 @@ pipeline {
       steps {
         script {
         sh 'mvn test'
-          echo 'All tests passed'
+          echo 'All Tests Passed'
         }
       }
     }
