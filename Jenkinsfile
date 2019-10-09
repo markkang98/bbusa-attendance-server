@@ -1,13 +1,13 @@
 pipeline {
   agent any
   tools {
-          maven 'Maven 3.3.9'
-          jdk 'jdk11'
-      }
+          maven 'Maven 3.6.2'
+          jdk 'jdk9'
+     }
   stages {
   stage('Build') {
       steps {
-      sh 'mvn clean install'
+      sh 'mvn -Dmaven.test.failure.ignore=true install'
         script {
           echo 'Stage 1 is working'
         }
