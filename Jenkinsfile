@@ -16,7 +16,7 @@ pipeline {
   stage('Test') {
       steps {
         script {
-        junit
+        sh 'mvn test'
           echo 'All tests passed'
         }
       }
