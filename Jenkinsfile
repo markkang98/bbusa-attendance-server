@@ -16,7 +16,7 @@ pipeline {
   stage('Test') {
       steps {
         script {
-        junit '**/target/*.xml'
+        junit
           echo 'All tests passed'
         }
       }
