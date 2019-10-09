@@ -9,14 +9,15 @@ pipeline {
       steps {
       sh 'mvn clean install'
         script {
-          echo 'Stage 1 is working'
+          echo 'Build successful'
         }
       }
     }
-  stage('Stage 2') {
+  stage('Test') {
       steps {
         script {
-          echo 'Stage 2 is working'
+        junit '**/target/*.xml'
+          echo 'All tests passed'
         }
       }
     }
