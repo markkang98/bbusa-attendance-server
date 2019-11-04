@@ -1,6 +1,6 @@
 package com.bbusa.bbusa.Controller;
 
-import com.bbusa.bbusa.Entity.AttendanceEntity;
+import com.bbusa.bbusa.Entity.prev.AttendanceEntity;
 import com.bbusa.bbusa.APIResponse.StudentAPIResponse;
 import com.bbusa.bbusa.Repository.prev.AttendanceRepository;
 import com.bbusa.bbusa.Repository.prev.StudentInformationRepository;

@@ -1,4 +1,4 @@
-package com.bbusa.bbusa.Entity;
+package com.bbusa.bbusa.Entity.prev;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

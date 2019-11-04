@@ -1,6 +1,6 @@
 package com.bbusa.bbusa.APIResponse;
 
-import com.bbusa.bbusa.Entity.StudentEntity;
+import com.bbusa.bbusa.Entity.prev.StudentEntity;
 
 import java.util.List;
 

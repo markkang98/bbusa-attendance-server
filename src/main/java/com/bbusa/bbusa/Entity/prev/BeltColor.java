@@ -1,4 +1,4 @@
-package com.bbusa.bbusa.Entity;
+package com.bbusa.bbusa.Entity.prev;
 
 public enum BeltColor {
     WHITE(0), ORANGE(1), YELLOW(2), GREEN(3), PURPLE(4), BLUE(5),

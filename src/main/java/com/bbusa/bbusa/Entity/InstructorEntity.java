@@ -1,14 +1,15 @@
-package com.bbusa.bbusa.Entity.curr;
+package com.bbusa.bbusa.Entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Instructor")
 @IdClass(InstructorEntity.class)
-public class InstructorEntity {
+public class InstructorEntity implements Serializable {
 
     @Id
     private int IID;

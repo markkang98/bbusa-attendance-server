@@ -1,6 +1,6 @@
 package com.bbusa.bbusa.APIResponse;
 
-import com.bbusa.bbusa.Entity.StudentEntity;
+import com.bbusa.bbusa.Entity.prev.StudentEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;

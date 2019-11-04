@@ -1,6 +1,6 @@
 package com.bbusa.bbusa;
 
-import com.bbusa.bbusa.Entity.AttendanceEntity;
+import com.bbusa.bbusa.Entity.prev.AttendanceEntity;
 import org.junit.Assert;
 import org.junit.Test;
 import java.sql.Date;

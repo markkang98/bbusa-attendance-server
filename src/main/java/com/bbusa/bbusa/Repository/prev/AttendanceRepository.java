@@ -1,6 +1,6 @@
 package com.bbusa.bbusa.Repository.prev;
 
-import com.bbusa.bbusa.Entity.AttendanceEntity;
+import com.bbusa.bbusa.Entity.prev.AttendanceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
