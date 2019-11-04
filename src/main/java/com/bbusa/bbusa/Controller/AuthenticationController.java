@@ -3,9 +3,10 @@ package com.bbusa.bbusa.Controller;
 import com.bbusa.bbusa.APIResponse.CookieAPIResponse;
 import com.bbusa.bbusa.Authentication.PasswordHash;
 import com.bbusa.bbusa.Entity.*;
-import com.bbusa.bbusa.Repository.AuthenticationRepository;
-import com.bbusa.bbusa.Repository.CookieRepository;
-import com.bbusa.bbusa.Repository.StudentInformationRepository;
+import com.bbusa.bbusa.Entity.prev.*;
+import com.bbusa.bbusa.Repository.prev.AuthenticationRepository;
+import com.bbusa.bbusa.Repository.prev.CookieRepository;
+import com.bbusa.bbusa.Repository.prev.StudentInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -110,7 +111,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/enterStudentInformation")
-    public StudentEntity addUserInformation(HttpServletResponse httpServletResponse,@RequestParam(value = USERID_PARAM) String instructor_id, @RequestParam(value = BELT_COLOR) String belt_color,
+    public StudentEntity addUserInformation(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String instructor_id, @RequestParam(value = BELT_COLOR) String belt_color,
                                             @RequestParam(value = CONTRACT_TYPE) String contract_type,
                                             @RequestParam(value = FIRST_NAME) String first_name, @RequestParam(value = LAST_NAME) String last_name) {
 
