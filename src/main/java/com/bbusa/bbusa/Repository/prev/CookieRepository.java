@@ -1,4 +1,4 @@
-package com.bbusa.bbusa.Repository;
+package com.bbusa.bbusa.Repository.prev;
 
 import com.bbusa.bbusa.Entity.CookieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

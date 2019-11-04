@@ -2,8 +2,8 @@ package com.bbusa.bbusa.Controller;
 
 import com.bbusa.bbusa.Entity.AttendanceEntity;
 import com.bbusa.bbusa.APIResponse.StudentAPIResponse;
-import com.bbusa.bbusa.Repository.AttendanceRepository;
-import com.bbusa.bbusa.Repository.StudentInformationRepository;
+import com.bbusa.bbusa.Repository.prev.AttendanceRepository;
+import com.bbusa.bbusa.Repository.prev.StudentInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
