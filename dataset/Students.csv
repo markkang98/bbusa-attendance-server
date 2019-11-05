@@ -1,4 +1,4 @@
-﻿SID,email (inherited),belt,gender,age,emergency_contact,emergency_contact_number
+﻿SID,email,belt,gender,age,emergency_contact,emergency_contact_number
 1,ijackson@hotmail.com,green,,11,,
 2,burns@sbcglobal.net,white,,16,,
 3,bbirth@att.net,red,,7,,
