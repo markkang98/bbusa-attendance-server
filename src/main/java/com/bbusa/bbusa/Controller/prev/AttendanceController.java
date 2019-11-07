@@ -1,4 +1,4 @@
-package com.bbusa.bbusa.Controller;
+package com.bbusa.bbusa.Controller.prev;
 
 import com.bbusa.bbusa.Entity.prev.AttendanceEntity;
 import com.bbusa.bbusa.APIResponse.StudentAPIResponse;
