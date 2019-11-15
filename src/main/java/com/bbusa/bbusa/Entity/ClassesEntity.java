@@ -6,17 +6,18 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 @Table(name = "Classes")
-@IdClass(ClassesEntity.class)
+//@IdClass(ClassesEntity.class)
 public class ClassesEntity implements Serializable {
     @Id
     private int CID;
 
-    private Date start_date;
+    private Time start_time;
 
-    private Date end_date;
+    private Time end_time;
 
     private int target_start_age;
 
@@ -32,20 +33,20 @@ public class ClassesEntity implements Serializable {
         this.CID = CID;
     }
 
-    public Date getStart_date() {
-        return start_date;
+    public Time getStart_date() {
+        return start_time;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public void setStart_date(Time start_date) {
+        this.start_time = start_date;
     }
 
-    public Date getEnd_date() {
-        return end_date;
+    public Time getEnd_date() {
+        return end_time;
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+    public void setEnd_date(Time end_date) {
+        this.end_time = end_date;
     }
 
     public int getTarget_start_age() {

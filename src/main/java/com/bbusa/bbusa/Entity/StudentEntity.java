@@ -12,7 +12,7 @@ public class StudentEntity implements Serializable {
     @Id
     private int SID;
 
-    private String studentEmail;
+    private String student_email;
 
     private String belt;
 
@@ -32,12 +32,12 @@ public class StudentEntity implements Serializable {
         this.SID = SID;
     }
 
-    public String getStudentEmail() {
-        return studentEmail;
+    public String getStudent_email() {
+        return student_email;
     }
 
-    public void setStudentEmail(String studentEmail) {
-        this.studentEmail = studentEmail;
+    public void setStudent_email(String student_email) {
+        this.student_email = student_email;
     }
 
     public String getBelt() {

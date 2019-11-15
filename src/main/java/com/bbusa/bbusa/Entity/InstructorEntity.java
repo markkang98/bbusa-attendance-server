@@ -14,7 +14,7 @@ public class InstructorEntity implements Serializable {
     @Id
     private int IID;
 
-    private String instructorEmail;
+    private String instructor_email;
 
     private String belt;
 
@@ -27,11 +27,11 @@ public class InstructorEntity implements Serializable {
     }
 
     public String getInstructorEmail() {
-        return instructorEmail;
+        return instructor_email;
     }
 
     public void setInstructorEmail(String instructorEmail) {
-        this.instructorEmail = instructorEmail;
+        this.instructor_email = instructorEmail;
     }
 
     public String getBelt() {
