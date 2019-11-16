@@ -12,6 +12,7 @@ import com.bbusa.bbusa.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@RestController("/student")
 public class StudentController {
-    @Value("${cors.host}")
+
+    @Value("{cors.host}")
     private String corsHost;
 
     @Autowired
@@ -35,8 +37,10 @@ public class StudentController {
 
     @Autowired
     private AttendsRepository attendsRepository;
-    @GetMapping("/getClassList")
-    public List<ClassListAPIResponse> getClassList(HttpServletResponse httpServletResponse, @RequestParam String student_email){
+
+
+    @GetMapping("{contextPath}/getClassList")
+    public List<ClassListAPIResponse> getClassList(HttpServletResponse httpServletResponse, @RequestHeader("Authorization") String student_email){
         addCrossOrigins(httpServletResponse);
         List<ClassListAPIResponse> classList = new ArrayList<>();
         List<ClassesEntity> classesEntities =  classesRepository.getListOfClassesOfStudent(student_email);
@@ -55,13 +59,22 @@ public class StudentController {
         return classList;
     }
 
-    @GetMapping("/getStudentProfile")
+    @GetMapping("{contextPath}/getStudentProfile")
     public List<StudentEntity> getStudentEntity(HttpServletResponse httpServletResponse, @RequestParam String student_email){
         addCrossOrigins(httpServletResponse);
         return studentRepository.getStudentProfile(student_email);
     }
+
+
+//    @GetMapping("/getParentsStudents")
+//    public List<StudentEntity> getParentsStudent(HttpServletResponse httpServletResponse){
+//        addCrossOrigins(httpServletResponse);
+//
+//    }
+
     private void addCrossOrigins(HttpServletResponse httpServletResponse){
         httpServletResponse.addHeader("Access-Control-Allow-Origin", corsHost);
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+        httpServletResponse.addHeader("Access-Control-Allow-Headers", "Authorization");
     }
 }
