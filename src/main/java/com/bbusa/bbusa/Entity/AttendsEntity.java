@@ -18,7 +18,7 @@ public class AttendsEntity implements Serializable {
     private int CID;
 
     @Id
-    private Date attendDate;
+    private Date attend_date;
 
     private String attendance;
 
@@ -39,11 +39,11 @@ public class AttendsEntity implements Serializable {
     }
 
     public Date getAttendDate() {
-        return attendDate;
+        return attend_date;
     }
 
     public void setAttendDate(Date attendDate) {
-        this.attendDate = attendDate;
+        this.attend_date = attendDate;
     }
 
     public String getAttendance() {

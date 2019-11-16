@@ -1,9 +1,11 @@
 package com.bbusa.bbusa.Controller;
 
 import com.bbusa.bbusa.APIResponse.ClassListAPIResponse;
+import com.bbusa.bbusa.Entity.AttendsEntity;
 import com.bbusa.bbusa.Entity.ClassesEntity;
 import com.bbusa.bbusa.Entity.InstructorEntity;
 import com.bbusa.bbusa.Entity.StudentEntity;
+import com.bbusa.bbusa.Repository.AttendsRepository;
 import com.bbusa.bbusa.Repository.ClassesRepository;
 import com.bbusa.bbusa.Repository.InstructorRepository;
 import com.bbusa.bbusa.Repository.StudentRepository;
@@ -31,6 +33,8 @@ public class StudentController {
     @Autowired
     private InstructorRepository instructorRepository;
 
+    @Autowired
+    private AttendsRepository attendsRepository;
     @GetMapping("/getClassList")
     public List<ClassListAPIResponse> getClassList(HttpServletResponse httpServletResponse, @RequestParam String student_email){
         addCrossOrigins(httpServletResponse);
@@ -41,6 +45,8 @@ public class StudentController {
             ClassListAPIResponse classListAPIResponse = new ClassListAPIResponse();
             int CID = classesEntity.getCID();
             List<InstructorEntity> instructorEntities = instructorRepository.getClassProfile(CID);
+            List<AttendsEntity> attendsEntities = attendsRepository.getClassAttends(student_email, CID);
+            classListAPIResponse.setAttendsEntities(attendsEntities);
             classListAPIResponse.setClassesEntity(classesEntity);
             classListAPIResponse.setInstructorEntities(instructorEntities);
             classList.add(classListAPIResponse);

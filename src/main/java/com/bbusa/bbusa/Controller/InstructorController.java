@@ -17,23 +17,6 @@ public class InstructorController {
     //get profile
     //get list of classes
 
-    @GetMapping("/getClassList")
-    public List<ClassListAPIResponse> getClassList(HttpServletResponse httpServletResponse, @RequestParam String student_email){
-        addCrossOrigins(httpServletResponse);
-        List<ClassListAPIResponse> classList = new ArrayList<>();
-        List<ClassesEntity> classesEntities =  classesRepository.getListOfClassesOfStudent(student_email);
-
-        for(ClassesEntity classesEntity: classesEntities){
-            ClassListAPIResponse classListAPIResponse = new ClassListAPIResponse();
-            int CID = classesEntity.getCID();
-            List<InstructorEntity> instructorEntities = instructorRepository.getClassProfile(CID);
-            classListAPIResponse.setClassesEntity(classesEntity);
-            classListAPIResponse.setInstructorEntities(instructorEntities);
-            classList.add(classListAPIResponse);
-        }
-
-        return classList;
-    }
     //add instructor
     //add student and parent
 
