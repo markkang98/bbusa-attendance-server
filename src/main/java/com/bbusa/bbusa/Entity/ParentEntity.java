@@ -13,7 +13,7 @@ public class ParentEntity implements Serializable {
     @Id
     private int PID;
 
-    private String parentEmail;
+    private String parent_email;
 
     private String phone_number;
 
@@ -26,11 +26,11 @@ public class ParentEntity implements Serializable {
     }
 
     public String getParentEmail() {
-        return parentEmail;
+        return parent_email;
     }
 
     public void setParentEmail(String parentEmail) {
-        this.parentEmail = parentEmail;
+        this.parent_email = parent_email;
     }
 
     public String getPhone_number() {
