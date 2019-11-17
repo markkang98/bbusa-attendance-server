@@ -1,5 +1,6 @@
 package com.bbusa.bbusa.Controller;
 
+import com.bbusa.bbusa.APIResponse.StudentAPIResponse;
 import com.bbusa.bbusa.Entity.ParentEntity;
 import com.bbusa.bbusa.Entity.StudentEntity;
 import com.bbusa.bbusa.Repository.*;
@@ -32,9 +33,20 @@ public class ParentController {
     private ParentRepository parentRepository;
 
     @GetMapping("{contextPath}/getParentProfile")
-    public List<ParentEntity> getParentEntity(HttpServletResponse httpServletResponse, @RequestParam String parent_email){
+    public List<ParentEntity> getParentEntity(HttpServletResponse httpServletResponse, @RequestParam String parent_email) {
         addCrossOrigins(httpServletResponse);
         return parentRepository.getParentProfile(parent_email);
+    }
+
+    @GetMapping("{contextPath}/getStudentLists")
+    public List<StudentAPIResponse> getStudentList(HttpServletResponse httpServletResponse, @RequestParam String parent_email) {
+        addCrossOrigins(httpServletResponse);
+        List<StudentAPIResponse> studentList = new ArrayList<>();
+        List<StudentEntity> studentEntities = parentRepository.getParentsStudents(parent_email);
+        StudentAPIResponse studentAPIResponse = new StudentAPIResponse();
+        studentAPIResponse.setAllUsers(studentEntities);
+        studentList.add(studentAPIResponse);
+        return studentList;
     }
 
     private void addCrossOrigins(HttpServletResponse httpServletResponse){

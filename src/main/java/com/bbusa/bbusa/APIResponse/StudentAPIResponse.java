@@ -1,6 +1,6 @@
 package com.bbusa.bbusa.APIResponse;
 
-import com.bbusa.bbusa.Entity.prev.StudentEntity;
+import com.bbusa.bbusa.Entity.StudentEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -17,4 +17,5 @@ public class StudentAPIResponse implements Serializable {
     public void setAllUsers(List<StudentEntity> allUsers) {
         this.allUsers = allUsers;
     }
+
 }

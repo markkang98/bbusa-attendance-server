@@ -17,7 +17,7 @@ public interface ParentRepository extends JpaRepository<ParentEntity, String> {
             "innodb.Parent as p\n" +
             "where ps.PID = p.PID and s.SID = ps.SID\n" +
             "and p.parent_email = :parentEmail" , nativeQuery = true)
-    List<ParentEntity> getParentsStudents(@Param("parentEmail") String parentEmail);
+    List<StudentEntity> getParentsStudents(@Param("parentEmail") String parentEmail);
 
     @Query(value = "SELECT * \n" +
             "FROM innodb.Parent as p\n" +

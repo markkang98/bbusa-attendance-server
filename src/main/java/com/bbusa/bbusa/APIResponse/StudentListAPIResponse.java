@@ -104,4 +104,6 @@ public class StudentListAPIResponse {
     public void setBlackBelts(List<StudentEntity> blackBelts) {
         this.blackBelts = blackBelts;
     }
+
+
 }
