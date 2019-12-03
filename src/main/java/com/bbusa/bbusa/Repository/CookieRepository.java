@@ -1,6 +1,6 @@
-package com.bbusa.bbusa.Repository.prev;
+package com.bbusa.bbusa.Repository;
 
-import com.bbusa.bbusa.Entity.prev.CookieEntity;
+import com.bbusa.bbusa.Entity.CookieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

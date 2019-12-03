@@ -2,9 +2,10 @@ package com.bbusa.bbusa.Controller.prev;
 
 import com.bbusa.bbusa.APIResponse.CookieAPIResponse;
 import com.bbusa.bbusa.Authentication.PasswordHash;
+import com.bbusa.bbusa.Entity.CookieEntity;
 import com.bbusa.bbusa.Entity.prev.*;
 import com.bbusa.bbusa.Repository.prev.AuthenticationRepository;
-import com.bbusa.bbusa.Repository.prev.CookieRepository;
+import com.bbusa.bbusa.Repository.CookieRepository;
 import com.bbusa.bbusa.Repository.prev.StudentInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,40 +53,40 @@ public class AuthenticationControllerPrev {
     private static final String COOKIE_KEY = "CURRENTUSER";
 
     private static final String EMPTY_VALUE = "";
+//
+//    @PostMapping("/registration")
+//    public AuthenticationEntity createUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) {
+//        addCrossOrigins(httpServletResponse);
+//        try {
+//            passwordHasher.hashPassword(password);
+//        } catch (NoSuchAlgorithmException ex) {
+//            //TODO: ADD HTTP EXCEPTION
+//        }
+//        String securePassword = passwordHasher.getSecurePassword();
+//        byte[] salt = passwordHasher.getSalt();
+//        AuthenticationEntity authenticationEntity = new AuthenticationEntity(user_id, securePassword, salt);
+//        return authenticationRepository.save(authenticationEntity);
+//    }
 
-    @PostMapping("/registration")
-    public AuthenticationEntity createUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) {
-        addCrossOrigins(httpServletResponse);
-        try {
-            passwordHasher.hashPassword(password);
-        } catch (NoSuchAlgorithmException ex) {
-            //TODO: ADD HTTP EXCEPTION
-        }
-        String securePassword = passwordHasher.getSecurePassword();
-        byte[] salt = passwordHasher.getSalt();
-        AuthenticationEntity authenticationEntity = new AuthenticationEntity(user_id, securePassword, salt);
-        return authenticationRepository.save(authenticationEntity);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) throws NoSuchAlgorithmException{
-        addCrossOrigins(httpServletResponse);
-        byte [] salt = authenticationRepository.getSalt(user_id);
-        if(authenticationRepository.getHashedPassword(user_id).equals(passwordHasher.checkPassword(password, salt))) {
-           passwordHasher.hashPassword(user_id + password);
-           byte [] cookieSalt = passwordHasher.getSalt();
-           String hashedCookie = passwordHasher.getSecurePassword();
-           Cookie cookie = new Cookie(COOKIE_KEY,  hashedCookie);
-           cookie.setMaxAge(Integer.MAX_VALUE);
-           CookieEntity cookieEntity = new CookieEntity(user_id, hashedCookie, cookieSalt);
-           cookieRepository.save(cookieEntity);
-           httpServletResponse.addCookie(cookie);
-           System.out.println(hashedCookie);
-           return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-        }else{
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
-        }
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) throws NoSuchAlgorithmException{
+//        addCrossOrigins(httpServletResponse);
+//        byte [] salt = authenticationRepository.getSalt(user_id);
+//        if(authenticationRepository.getHashedPassword(user_id).equals(passwordHasher.checkPassword(password, salt))) {
+//           passwordHasher.hashPassword(user_id + password);
+//           byte [] cookieSalt = passwordHasher.getSalt();
+//           String hashedCookie = passwordHasher.getSecurePassword();
+//           Cookie cookie = new Cookie(COOKIE_KEY,  hashedCookie);
+//           cookie.setMaxAge(Integer.MAX_VALUE);
+//           CookieEntity cookieEntity = new CookieEntity(user_id, hashedCookie, cookieSalt);
+//           cookieRepository.save(cookieEntity);
+//           httpServletResponse.addCookie(cookie);
+//           System.out.println(hashedCookie);
+//           return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+//        }else{
+//            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+//        }
+//    }
     @GetMapping("/getCurrentUser")
     public String getCurrentUser(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
         //TODO: MAKE LOGIC FOR CHECKING IF COOKIE IS VERIFIED

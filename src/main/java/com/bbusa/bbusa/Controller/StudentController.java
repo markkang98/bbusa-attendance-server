@@ -23,7 +23,7 @@ import java.util.List;
 @RestController("/student")
 public class StudentController {
 
-    @Value("{cors.host}")
+    @Value("${cors.host}")
     private String corsHost;
 
     @Autowired
@@ -40,7 +40,7 @@ public class StudentController {
 
 
     @GetMapping("{contextPath}/getClassList")
-    public List<ClassListAPIResponse> getClassList(HttpServletResponse httpServletResponse, @RequestHeader("Authorization") String student_email){
+    public List<ClassListAPIResponse> getClassList(HttpServletResponse httpServletResponse, @RequestParam String student_email){
         addCrossOrigins(httpServletResponse);
         List<ClassListAPIResponse> classList = new ArrayList<>();
         List<ClassesEntity> classesEntities =  classesRepository.getListOfClassesOfStudent(student_email);
@@ -65,16 +65,10 @@ public class StudentController {
         return studentRepository.getStudentProfile(student_email);
     }
 
-
-//    @GetMapping("/getParentsStudents")
-//    public List<StudentEntity> getParentsStudent(HttpServletResponse httpServletResponse){
-//        addCrossOrigins(httpServletResponse);
-//
-//    }
+    //TODO: We need to create a way to edit a student's profile
 
     private void addCrossOrigins(HttpServletResponse httpServletResponse){
         httpServletResponse.addHeader("Access-Control-Allow-Origin", corsHost);
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
-        httpServletResponse.addHeader("Access-Control-Allow-Headers", "Authorization");
     }
 }

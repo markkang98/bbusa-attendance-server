@@ -20,6 +20,30 @@ public class RegisteredUserEntity implements Serializable {
 
     private String password;
 
+    private String hashed_password;
+
+    private byte[] salt;
+
+    public RegisteredUserEntity(){
+
+    }
+
+    public String getHashed_password() {
+        return hashed_password;
+    }
+
+    public void setHashed_password(String hashed_password) {
+        this.hashed_password = hashed_password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
     public String getEmail() {
         return email;
     }

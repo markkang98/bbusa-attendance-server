@@ -1,8 +1,13 @@
 package com.bbusa.bbusa.Repository;
 
+import com.bbusa.bbusa.Entity.AttendsEntity;
 import com.bbusa.bbusa.Entity.TeachesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TeachesRepository extends JpaRepository<TeachesEntity, String> {
