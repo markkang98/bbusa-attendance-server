@@ -53,7 +53,7 @@ public class AuthenticationControllerPrev {
     private static final String COOKIE_KEY = "CURRENTUSER";
 
     private static final String EMPTY_VALUE = "";
-//
+////
 //    @PostMapping("/registration")
 //    public AuthenticationEntity createUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) {
 //        addCrossOrigins(httpServletResponse);
@@ -87,28 +87,28 @@ public class AuthenticationControllerPrev {
 //            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
 //        }
 //    }
-    @GetMapping("/getCurrentUser")
-    public String getCurrentUser(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
-        //TODO: MAKE LOGIC FOR CHECKING IF COOKIE IS VERIFIED
-        addCrossOrigins(httpServletResponse);
-        System.out.println(cookie);
-        try{
-            return cookieRepository.findLoggedInUser(cookie).getUser_id();
-        }catch(NullPointerException ex){
-            return EMPTY_VALUE;
-        }
-    }
+//    @GetMapping("/getCurrentUser")
+//    public String getCurrentUser(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
+//        //TODO: MAKE LOGIC FOR CHECKING IF COOKIE IS VERIFIED
+//        addCrossOrigins(httpServletResponse);
+//        System.out.println(cookie);
+//        try{
+//            return cookieRepository.findLoggedInUser(cookie).getUser_id();
+//        }catch(NullPointerException ex){
+//            return EMPTY_VALUE;
+//        }
+//    }
 
-    @PostMapping("/logOut")
-    public ResponseEntity logOut(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
-        Cookie emptyCookie = new Cookie(COOKIE_KEY, EMPTY_VALUE);
-        addCrossOrigins(httpServletResponse);
-        emptyCookie.setMaxAge(0);
-        httpServletResponse.addCookie(emptyCookie);
-        CookieEntity currentCookie = cookieRepository.findLoggedInUser(cookie);
-        cookieRepository.delete(currentCookie);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
+//    @PostMapping("/logOut")
+//    public ResponseEntity logOut(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
+//        Cookie emptyCookie = new Cookie(COOKIE_KEY, EMPTY_VALUE);
+//        addCrossOrigins(httpServletResponse);
+//        emptyCookie.setMaxAge(0);
+//        httpServletResponse.addCookie(emptyCookie);
+//        CookieEntity currentCookie = cookieRepository.findLoggedInUser(cookie);
+//        cookieRepository.delete(currentCookie);
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+//    }
 
     @PostMapping("/enterStudentInformation")
     public StudentEntity addUserInformation(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String instructor_id, @RequestParam(value = BELT_COLOR) String belt_color,

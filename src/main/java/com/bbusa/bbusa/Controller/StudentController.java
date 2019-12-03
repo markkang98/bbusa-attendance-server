@@ -66,7 +66,11 @@ public class StudentController {
     }
 
     //TODO: We need to create a way to edit a student's profile
-
+    //TODO: EMAIL
+    //TODO: BELT
+    //TODO: AGE
+    //TODO: EMERGENCY CONTACT NAME
+    //TODO: EMERGENCY CONTACT NUMBER
     private void addCrossOrigins(HttpServletResponse httpServletResponse){
         httpServletResponse.addHeader("Access-Control-Allow-Origin", corsHost);
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");

@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +28,8 @@ public class AuthenticationController {
 
     private static final String COOKIE_KEY = "CURRENTUSER";
 
+    private static final String EMPTY_VALUE = "";
+
     @Autowired
     private PasswordHash passwordHasher;
 
@@ -41,7 +42,7 @@ public class AuthenticationController {
     @Value("${cors.host}")
     private String corsHost;
 
-    @PostMapping("/registration")
+    @PostMapping("{contextPath}/registration")
     public RegisteredUserEntity createUser(HttpServletResponse httpServletResponse,
                                            @RequestParam(value = USERID_PARAM) String user_email,
                                            @RequestParam(value = PASSWORD_PARAM) String password,
@@ -66,7 +67,7 @@ public class AuthenticationController {
         return registeredUserRepository.save(authenticationEntity);
     }
 
-    @PostMapping("/login")
+    @PostMapping("{contextPath}/login")
     public ResponseEntity verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) throws NoSuchAlgorithmException{
         addCrossOrigins(httpServletResponse);
         byte [] salt = registeredUserRepository.getSalt(user_id);
@@ -83,6 +84,28 @@ public class AuthenticationController {
         }else{
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
         }
+    }
+
+    @GetMapping("{contextPath}/getCurrentUser")
+    public String getCurrentUser(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
+        //TODO: MAKE LOGIC FOR CHECKING IF COOKIE IS VERIFIED
+        addCrossOrigins(httpServletResponse);
+        try{
+            return cookieRepository.findLoggedInUser(cookie).getUser_id();
+        }catch(NullPointerException ex){
+            return EMPTY_VALUE;
+        }
+    }
+
+    @PostMapping("{contextPath}/logOut")
+    public ResponseEntity logOut(HttpServletResponse httpServletResponse, @CookieValue(name = COOKIE_KEY, defaultValue = "not working") String cookie){
+        Cookie emptyCookie = new Cookie(COOKIE_KEY, EMPTY_VALUE);
+        addCrossOrigins(httpServletResponse);
+        emptyCookie.setMaxAge(0);
+        httpServletResponse.addCookie(emptyCookie);
+        CookieEntity currentCookie = cookieRepository.findLoggedInUser(cookie);
+        cookieRepository.delete(currentCookie);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     private void addCrossOrigins(HttpServletResponse httpServletResponse){
