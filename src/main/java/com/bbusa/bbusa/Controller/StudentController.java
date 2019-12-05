@@ -11,10 +11,7 @@ import com.bbusa.bbusa.Repository.InstructorRepository;
 import com.bbusa.bbusa.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -22,6 +19,18 @@ import java.util.List;
 
 @RestController("/student")
 public class StudentController {
+
+    private static final String STUDENT_EMAIL = "studentEmail";
+
+    private static final String AGE = "age";
+
+    private static final String EMERGENCY_CONTACT_NAME = "emergencyContactName";
+
+    private static final String EMERGENCY_CONTACT_NUMBER = "emergencyContactNumber";
+
+    private static final String GENDER = "gender";
+
+    private static final String BELT = "belt";
 
     @Value("${cors.host}")
     private String corsHost;
@@ -57,6 +66,24 @@ public class StudentController {
         }
 
         return classList;
+    }
+
+    @PutMapping("/addNewStudent")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public StudentEntity addNewStudent(@RequestParam(value = STUDENT_EMAIL) String student_email,
+                              @RequestParam(value = AGE) int age,
+                              @RequestParam(value = EMERGENCY_CONTACT_NAME) String emergency_contact_name,
+                              @RequestParam(value = EMERGENCY_CONTACT_NUMBER) String emergency_contact_number,
+                              @RequestParam(value = GENDER) String  gender,
+                              @RequestParam(value = BELT) String belt){
+        StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setAge(age);
+        studentEntity.setBelt(belt);
+        studentEntity.setEmergency_contact_name(emergency_contact_name);
+        studentEntity.setEmergency_contact_number(emergency_contact_number);
+        studentEntity.setGender(gender);
+        studentEntity.setStudent_email(student_email);
+        return studentRepository.save(studentEntity);
     }
 
     @GetMapping("{contextPath}/getStudentProfile")

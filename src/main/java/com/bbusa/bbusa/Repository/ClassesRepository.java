@@ -19,5 +19,7 @@ public interface ClassesRepository extends JpaRepository<ClassesEntity, String> 
             "FROM Classes as c, Instructor as i, Teaches as t WHERE i.instructor_email = :instructor_email AND t.IID = i.IID AND c.CID = t.CID", nativeQuery = true)
     List<ClassesEntity> getListOfClassesOfInstructor(@Param("instructor_email") String instructor_email);
 
+    @Query(value = "SELECT MAX(CID) FROM Classes", nativeQuery = true)
+    int getMaxCID();
 
 }

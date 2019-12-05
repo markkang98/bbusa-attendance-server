@@ -1,10 +1,8 @@
 package com.bbusa.bbusa.Controller;
 
 import com.bbusa.bbusa.Authentication.PasswordHash;
-import com.bbusa.bbusa.Entity.RegisteredUserEntity;
-import com.bbusa.bbusa.Entity.CookieEntity;
-import com.bbusa.bbusa.Repository.CookieRepository;
-import com.bbusa.bbusa.Repository.RegisteredUserRepository;
+import com.bbusa.bbusa.Entity.*;
+import com.bbusa.bbusa.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,7 @@ import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @RestController("/authentication")
 public class AuthenticationController {
@@ -38,6 +37,15 @@ public class AuthenticationController {
 
     @Autowired
     private CookieRepository cookieRepository;
+
+    @Autowired
+    private InstructorRepository instructorRepository;
+
+    @Autowired
+    private ParentRepository parentRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Value("${cors.host}")
     private String corsHost;
@@ -71,6 +79,9 @@ public class AuthenticationController {
     public ResponseEntity verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) throws NoSuchAlgorithmException{
         addCrossOrigins(httpServletResponse);
         byte [] salt = registeredUserRepository.getSalt(user_id);
+        if(salt == null){
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+        }
         if(registeredUserRepository.getHashedPassword(user_id).equals(passwordHasher.checkPassword(password, salt))) {
             passwordHasher.hashPassword(user_id + password);
             byte [] cookieSalt = passwordHasher.getSalt();
@@ -84,6 +95,24 @@ public class AuthenticationController {
         }else{
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
         }
+    }
+
+    @GetMapping("/checkInstructor")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public List<InstructorEntity> checkInstructor(@RequestParam(value = USERID_PARAM) String user_id){
+        return instructorRepository.getInstructor(user_id);
+    }
+
+    @GetMapping("/checkStudent")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public List<StudentEntity> checkStudent(@RequestParam(value = USERID_PARAM) String user_id) {
+        return studentRepository.getStudentProfile(user_id);
+    }
+
+    @GetMapping("/checkParent")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public List<ParentEntity> checkParent(@RequestParam(value = USERID_PARAM) String user_id){
+        return parentRepository.getParentProfile(user_id);
     }
 
     @GetMapping("{contextPath}/getCurrentUser")
