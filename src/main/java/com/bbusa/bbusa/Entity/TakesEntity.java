@@ -1,10 +1,9 @@
 package com.bbusa.bbusa.Entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import org.springframework.lang.Nullable;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -21,7 +20,18 @@ public class TakesEntity implements Serializable {
 
     private Date start_date;
 
-    private Date end_date;
+//    @Nullable
+//    private Date end_date;
+
+    private boolean verified;
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 
     public int getSID() {
         return SID;
@@ -47,11 +57,11 @@ public class TakesEntity implements Serializable {
         this.start_date = start_date;
     }
 
-    public Date getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
-    }
+//    public Date getEnd_date() {
+//        return end_date;
+//    }
+//
+//    public void setEnd_date(Date end_date) {
+//        this.end_date = end_date;
+//    }
 }

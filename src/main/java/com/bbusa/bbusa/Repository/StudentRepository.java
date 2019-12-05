@@ -12,4 +12,8 @@ import java.util.List;
 public interface StudentRepository extends JpaRepository<StudentEntity, String> {
     @Query(value = "SELECT * FROM Student WHERE Student.student_email = :student_email" , nativeQuery = true)
     List<StudentEntity> getStudentProfile(@Param("student_email") String student_email);
+
+    @Query(value = "SELECT * FROM Student WHERE Student.SID = :SID" , nativeQuery = true)
+    List<StudentEntity> getStudentProfileBySID(int SID);
+
 }

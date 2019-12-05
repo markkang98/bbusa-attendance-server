@@ -1,17 +1,13 @@
 package com.bbusa.bbusa.Controller;
 
 import com.bbusa.bbusa.APIResponse.ClassListAPIResponse;
+import com.bbusa.bbusa.APIResponse.ClassRequestAPIResponse;
 import com.bbusa.bbusa.APIResponse.InstructorProfileAPIResponse;
-import com.bbusa.bbusa.Entity.ClassesEntity;
-import com.bbusa.bbusa.Entity.InstructorEntity;
-import com.bbusa.bbusa.Entity.RegisteredUserEntity;
-import com.bbusa.bbusa.Entity.TeachesEntity;
-import com.bbusa.bbusa.Repository.ClassesRepository;
-import com.bbusa.bbusa.Repository.InstructorRepository;
-import com.bbusa.bbusa.Repository.RegisteredUserRepository;
-import com.bbusa.bbusa.Repository.TeachesRepository;
+import com.bbusa.bbusa.Entity.*;
+import com.bbusa.bbusa.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +57,12 @@ public class InstructorController {
 
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
+
+    @Autowired
+    private TakesRepository takesRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @PutMapping("/createInstructor")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -114,8 +116,8 @@ public class InstructorController {
         List<InstructorEntity> instructorEntities = instructorRepository.getInstructor(instructor_email);
         instructorProfileAPIResponse.setBelt(instructorEntities.get(0).getBelt());
         instructorProfileAPIResponse.setEmail(instructor_email);
-        instructorProfileAPIResponse.setFirst_name(registeredUserRepository.getInstructorFirstName(instructor_email));
-        instructorProfileAPIResponse.setLast_name(registeredUserRepository.getInstructorLastName(instructor_email));
+        instructorProfileAPIResponse.setFirst_name(registeredUserRepository.getFirstName(instructor_email));
+        instructorProfileAPIResponse.setLast_name(registeredUserRepository.getLastName(instructor_email));
         return instructorProfileAPIResponse;
     }
 
@@ -133,13 +135,54 @@ public class InstructorController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
-    @GetMapping("getlistOfStudentsForClass")
+
+
+    @GetMapping("/getlistOfStudentsForClass")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    public List<RegisteredUserEntity>  getListOfStudentsForClass(@RequestParam int CID){
+    public List<RegisteredUserEntity> getListOfStudentsForClass(@RequestParam int CID){
         return registeredUserRepository.listOfStudentsTakingClass(CID);
     }
 
-    //TODO: add instructor
-    //TODO: add student and parent
+    @GetMapping("/getClassRequests")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public List<ClassRequestAPIResponse> getClassRequests(@RequestParam(value = INSTRUCTOR) String instructor_email){
+        List<ClassesEntity> classesEntities = classesRepository.getListOfClassesOfInstructor(instructor_email);
+        List<TakesEntity> allRequests = new ArrayList<>();
+        List<ClassRequestAPIResponse> classRequestAPIResponses = new ArrayList<>();
+        for(ClassesEntity classesEntity: classesEntities){
+            List<TakesEntity> takesEntities = takesRepository.getUnverifiedRequests(classesEntity.getCID());
+            if(takesEntities.size() > 0) {
+                allRequests.addAll(takesEntities);
+            }
+        }
+        for(TakesEntity takesEntity: allRequests){
+            int CID = takesEntity.getCID();
+            int SID = takesEntity.getSID();
+            ClassesEntity classesEntity = classesRepository.getClassEntity(CID);
+            StudentEntity studentEntity = studentRepository.getStudentProfileBySID(SID).get(0);
+
+            String firstName = registeredUserRepository.getFirstName(studentEntity.getStudent_email());
+            String lastName = registeredUserRepository.getLastName(studentEntity.getStudent_email());
+
+            ClassRequestAPIResponse classRequestAPIResponse = new ClassRequestAPIResponse();
+            classRequestAPIResponse.setCID(CID);
+            classRequestAPIResponse.setSID(SID);
+            classRequestAPIResponse.setStudentFirstName(firstName);
+            classRequestAPIResponse.setStudentLastName(lastName);
+            classRequestAPIResponse.setDescription(classesEntity.getDescription());
+            classRequestAPIResponse.setStartAge(classesEntity.getTarget_start_age());
+            classRequestAPIResponse.setOlderAge(classesEntity.getTarget_older_age());
+            classRequestAPIResponse.setStartTime(classesEntity.getStart_date());
+            classRequestAPIResponse.setEndTime(classesEntity.getEnd_date());
+            classRequestAPIResponses.add(classRequestAPIResponse);
+        }
+        return classRequestAPIResponses ;
+    }
+
+    @PutMapping("/grantRequests")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public void grantRequest(@RequestParam int CID, @RequestParam int SID){
+        takesRepository.grantRequest(SID, CID);
+    }
 
 }

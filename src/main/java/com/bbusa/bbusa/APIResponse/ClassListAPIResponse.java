@@ -14,14 +14,34 @@ public class ClassListAPIResponse implements Serializable {
 
     private ClassesEntity classesEntity;
 
-    private List<AttendsEntity> attendsEntities;
+    private String instructor_firstName;
 
-    public List<AttendsEntity> getAttendsEntities() {
-        return attendsEntities;
+    private String instructor_lastName;
+
+    private int SID;
+
+    public int getSID() {
+        return SID;
     }
 
-    public void setAttendsEntities(List<AttendsEntity> attendsEntities) {
-        this.attendsEntities = attendsEntities;
+    public void setSID(int SID) {
+        this.SID = SID;
+    }
+
+    public String getInstructor_firstName() {
+        return instructor_firstName;
+    }
+
+    public void setInstructor_firstName(String instructor_firstName) {
+        this.instructor_firstName = instructor_firstName;
+    }
+
+    public String getInstructor_lastName() {
+        return instructor_lastName;
+    }
+
+    public void setInstructor_lastName(String instructor_lastName) {
+        this.instructor_lastName = instructor_lastName;
     }
 
     public List<InstructorEntity> getInstructorEntities() {
