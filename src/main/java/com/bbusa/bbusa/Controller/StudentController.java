@@ -2,10 +2,13 @@ package com.bbusa.bbusa.Controller;
 
 import com.bbusa.bbusa.APIResponse.ClassListAPIResponse;
 import com.bbusa.bbusa.APIResponse.FullClassInfoAPIResponse;
+import com.bbusa.bbusa.APIResponse.StudentProfileAPIResponse;
 import com.bbusa.bbusa.Entity.*;
 import com.bbusa.bbusa.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -132,16 +135,31 @@ public class StudentController {
 
     @GetMapping("{contextPath}/getStudentProfile")
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-    public List<StudentEntity> getStudentEntity(@RequestParam String student_email){
-        return studentRepository.getStudentProfile(student_email);
+    public StudentProfileAPIResponse getStudentEntity(@RequestParam String student_email){
+        String firstName = registeredUserRepository.getFirstName(student_email);
+        String lastName = registeredUserRepository.getLastName(student_email);
+        StudentEntity studentEntity = studentRepository.getStudentProfile(student_email).get(0);
+        StudentProfileAPIResponse studentProfileAPIResponse = new StudentProfileAPIResponse();
+        studentProfileAPIResponse.setFirst_name(firstName);
+        studentProfileAPIResponse.setLast_name(lastName);
+        studentProfileAPIResponse.setStudentEntity(studentEntity);
+        return studentProfileAPIResponse;
     }
 
-    //TODO: We need to create a way to edit a student's profile
-    //TODO: EMAIL
-    //TODO: BELT
-    //TODO: AGE
-    //TODO: EMERGENCY CONTACT NAME
-    //TODO: EMERGENCY CONTACT NUMBER
+    @PutMapping("{contextPath}/updateStudentProfile")
+    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+    public ResponseEntity getStudentEntity(@RequestParam String student_email,
+                                 @RequestParam String first_name,
+                                 @RequestParam String last_name,
+                                 @RequestParam String belt,
+                                 @RequestParam int age,
+                                 @RequestParam String emergencyContactName,
+                                 @RequestParam String emergencyContactNumber){
+
+        registeredUserRepository.update(student_email, first_name, last_name, student_email);
+        studentRepository.update(student_email, belt, age, emergencyContactName, emergencyContactNumber);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
     private void addCrossOrigins(HttpServletResponse httpServletResponse){
         httpServletResponse.addHeader("Access-Control-Allow-Origin", corsHost);
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
