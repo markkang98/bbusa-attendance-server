@@ -82,7 +82,14 @@ public class AuthenticationController {
         addCrossOrigins(httpServletResponse);
         byte [] salt = registeredUserRepository.getSalt(user_id);
         if(salt == null){
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+
+
+            if(registeredUserRepository.getPassword(user_id).equals(password)) {
+                return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+            }else{
+                return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+            }
+
         }
         if(registeredUserRepository.getHashedPassword(user_id).equals(passwordHasher.checkPassword(password, salt))) {
             passwordHasher.hashPassword(user_id + password);

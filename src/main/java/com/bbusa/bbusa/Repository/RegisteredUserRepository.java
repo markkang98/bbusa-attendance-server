@@ -24,6 +24,8 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUserEn
     @Query(value = "SELECT last_name FROM RegisteredUser WHERE RegisteredUser.email = :instructor_email", nativeQuery = true)
     String getLastName(@Param("instructor_email") String instructor_email);
 
+    @Query(value = "SELECT password FROM RegisteredUser WHERE RegisteredUser.password = :instructor_email", nativeQuery = true)
+    String getPassword(String instructor_email);
 
     @Query(value = "SELECT r.email, r.first_name, r.last_name, r.password, r.hashed_password, r.salt FROM RegisteredUser r, Takes t, Student s, Classes c WHERE " +
             "c.CID = :CID AND t.CID = :CID AND s.SID = t.SID AND s.student_email = r.email", nativeQuery = true)
