@@ -81,17 +81,26 @@ public class AuthenticationController {
     public ResponseEntity verifyUser(HttpServletResponse httpServletResponse, @RequestParam(value = USERID_PARAM) String user_id, @RequestParam(value = PASSWORD_PARAM) String password) throws NoSuchAlgorithmException{
         addCrossOrigins(httpServletResponse);
         byte [] salt = registeredUserRepository.getSalt(user_id);
-        if(salt == null){
-
+        String hashed_password = registeredUserRepository.getHashedPassword(user_id);
+        System.out.println(hashed_password);
+        if(hashed_password.equals("")){
 
             if(registeredUserRepository.getPassword(user_id).equals(password)) {
+                passwordHasher.hashPassword(user_id + password);
+                byte [] cookieSalt = passwordHasher.getSalt();
+                String hashedCookie = passwordHasher.getSecurePassword();
+                Cookie cookie = new Cookie(COOKIE_KEY,  hashedCookie);
+                cookie.setMaxAge(Integer.MAX_VALUE);
+                CookieEntity cookieEntity = new CookieEntity(user_id, hashedCookie, cookieSalt);
+                cookieRepository.save(cookieEntity);
+                httpServletResponse.addCookie(cookie);
                 return ResponseEntity.status(HttpStatus.ACCEPTED).build();
             }else{
                 return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
             }
 
         }
-        if(registeredUserRepository.getHashedPassword(user_id).equals(passwordHasher.checkPassword(password, salt))) {
+        if(hashed_password.equals(passwordHasher.checkPassword(password, salt))) {
             passwordHasher.hashPassword(user_id + password);
             byte [] cookieSalt = passwordHasher.getSalt();
             String hashedCookie = passwordHasher.getSecurePassword();
